@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    require_once "connect.php";
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -23,7 +27,7 @@
 
         <div id="helper">
 
-            <input id="email" name="email" type="email" placeholder="email"/>
+            <input id="email" name="email" type="email" placeholder="email" value="<?php if(isset($_GET['save'])||isset($_GET['readSub'])||isset($_GET['deleteRSS'])){echo $_SESSION['Semail']; } ?>" <?php  if(isset($_GET['save'])||isset($_GET['readSub'])||isset($_GET['deleteRSS'])){echo "readonly"; }?>/>
 
         </div>
 
@@ -41,8 +45,7 @@
 
 
                 <?php
-                session_start();
-                require_once "connect.php";
+                
 
                 $polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
 
@@ -51,6 +54,7 @@
 
                     $email = $_GET['email'];
                     $url = $_GET['url'];
+                    $_SESSION['Semail']=$email;
 
 
                     if ($polaczenie->connect_errno != 0) {
